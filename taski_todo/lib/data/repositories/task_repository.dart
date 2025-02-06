@@ -32,4 +32,12 @@ class TaskRepository {
   List<TaskModel> getCompletedTasks() {
     return _taskBox.values.where((task) => task.isCompleted).toList();
   }
+
+  Future<void> deleteAllDoneTasks() async {
+    final doneTasks =
+        _taskBox.values.where((task) => task.isCompleted).toList();
+    for (var task in doneTasks) {
+      await _taskBox.delete(task.id);
+    }
+  }
 }

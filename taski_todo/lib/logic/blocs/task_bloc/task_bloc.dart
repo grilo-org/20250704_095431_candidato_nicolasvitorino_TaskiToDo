@@ -16,6 +16,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     on<UpdateTask>(_updateTask);
     on<GetPendingTasks>(_getPendingTasks);
     on<GetCompletedTasks>(_getCompletedTasks);
+    on<DeleteAllDoneTasks>(_deleteAllDoneTasks);
   }
   Future<void> _getAllTasks(
     GetAllTasks event,
@@ -92,6 +93,19 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
       emit(TaskLoaded(completedTasks));
     } catch (e) {
       emit(TaskError("Erro ao carregar tarefas concluídas: $e"));
+    }
+  }
+
+  Future<void> _deleteAllDoneTasks(
+    DeleteAllDoneTasks event,
+    Emitter<TaskState> emit,
+  ) async {
+    emit(TaskLoading());
+    try {
+      await taskRepository.deleteAllDoneTasks();
+      add(GetAllTasks()); // Atualiza a lista após deletar
+    } catch (e) {
+      emit(TaskError("Erro ao deletar tarefas concluídas: $e"));
     }
   }
 }

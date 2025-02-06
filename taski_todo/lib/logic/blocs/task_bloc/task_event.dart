@@ -49,6 +49,8 @@ class GetPendingTasks extends TaskEvent {}
 
 class GetCompletedTasks extends TaskEvent {}
 
+class DeleteAllDoneTasks extends TaskEvent {}
+
 class TaskCompleted extends TaskEvent {
   final int id;
 
