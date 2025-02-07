@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:taski_todo/logic/blocs/task_bloc/task_bloc.dart';
+import 'package:taski_todo/presentation/widgets/task_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -11,6 +12,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
+  int tasksQuantity = 0;
 
   void _onItemTapped(int index) {
     setState(() {
@@ -50,6 +52,7 @@ class _HomePageState extends State<HomePage> {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(8.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             RichText(
               text: const TextSpan(
@@ -87,7 +90,7 @@ class _HomePageState extends State<HomePage> {
             BlocBuilder<TaskBloc, TaskState>(
               builder: (context, state) {
                 if (state is TaskLoaded) {
-                  int tasksQuantity =
+                  tasksQuantity =
                       state.tasks.length; // Obtém o número de tarefas
                   return Text(
                     'You\'ve got $tasksQuantity to do',
@@ -99,20 +102,32 @@ class _HomePageState extends State<HomePage> {
                     ),
                   );
                 } else if (state is TaskLoading) {
-                  return const CircularProgressIndicator(); // Mostra um loader enquanto carrega
+                  return const CircularProgressIndicator();
                 } else {
                   return const Text(
-                    'No tasks found.',
+                    'Create tasks to achieve more.',
                     style: TextStyle(
                       fontFamily: 'Urbanist',
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                       color: Color(0xFF8D9CB8),
                     ),
-                  ); // Caso não tenha tarefas
+                  );
                 }
               },
             ),
+            tasksQuantity <= 0
+                ? SizedBox(
+                    child: Image.asset('assets/desk.jpg'),
+                  )
+                : const TaskWidget(
+                    isDone: false,
+                    // onToggleCompleted: ,
+                    id: 0,
+                    title: 'Design sign up flow',
+                    description:
+                        'By the time a prospect arrives at your signup page, in most cases, they\'ve already By the time a prospect arrives at your signup page, in most cases.',
+                  ),
           ],
         ),
       ),
