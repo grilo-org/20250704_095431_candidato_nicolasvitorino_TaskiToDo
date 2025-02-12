@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class TaskModel {
-  final String id;
+  final int id;
   final String title;
   final String description;
   final bool isCompleted;
@@ -13,7 +13,7 @@ class TaskModel {
   });
 
   TaskModel copyWith({
-    String? id,
+    int? id,
     String? title,
     String? description,
     bool? isCompleted,

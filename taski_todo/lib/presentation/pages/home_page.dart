@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:taski_todo/logic/blocs/task_bloc/task_bloc.dart';
+import 'package:taski_todo/presentation/widgets/create_task_bottom_sheet.dart';
 import 'package:taski_todo/presentation/widgets/task_widget.dart';
 
 class HomePage extends StatefulWidget {
@@ -15,9 +16,20 @@ class _HomePageState extends State<HomePage> {
   int tasksQuantity = 0;
 
   void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+    if (index == 1) {
+      showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        ),
+        builder: (context) => const CreateTaskBottomSheet(),
+      );
+    } else {
+      setState(() {
+        _selectedIndex = index;
+      });
+    }
   }
 
   @override
@@ -40,13 +52,21 @@ class _HomePageState extends State<HomePage> {
         onTap: _onItemTapped,
         items: [
           BottomNavigationBarItem(
-              icon: Image.asset('assets/todo_bottom_bar.jpg'), label: ''),
+              icon: Image.asset('assets/todo_bottom_bar.jpg',
+                  color: _selectedIndex == 0 ? Colors.blue : Colors.grey),
+              label: ''),
           BottomNavigationBarItem(
-              icon: Image.asset('assets/create_bottom_bar.jpg'), label: ''),
+              icon: Image.asset('assets/create_bottom_bar.jpg',
+                  color: _selectedIndex == 1 ? Colors.blue : Colors.grey),
+              label: ''),
           BottomNavigationBarItem(
-              icon: Image.asset('assets/search_bottom_bar.jpg'), label: ''),
+              icon: Image.asset('assets/search_bottom_bar.jpg',
+                  color: _selectedIndex == 2 ? Colors.blue : Colors.grey),
+              label: ''),
           BottomNavigationBarItem(
-              icon: Image.asset('assets/done_bottom_bar.jpg'), label: ''),
+              icon: Image.asset('assets/done_bottom_bar.jpg',
+                  color: _selectedIndex == 3 ? Colors.blue : Colors.grey),
+              label: ''),
         ],
       ),
       body: SingleChildScrollView(
@@ -117,17 +137,69 @@ class _HomePageState extends State<HomePage> {
               },
             ),
             tasksQuantity <= 0
-                ? SizedBox(
-                    child: Image.asset('assets/desk.jpg'),
+                ? Column(
+                    children: [
+                      SizedBox(
+                        child: Image.asset('assets/desk.jpg'),
+                      ),
+                      const Text(
+                        'You have no task listed.',
+                        style: TextStyle(
+                          fontFamily: 'Urbanist',
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: Color(0xFF8D9CB8),
+                        ),
+                      ),
+                      TextButton.icon(
+                        onPressed: () {
+                          showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true,
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(20)),
+                            ),
+                            builder: (context) => const CreateTaskBottomSheet(),
+                          );
+                        },
+                        icon: const Icon(Icons.add,
+                            color: Color.fromARGB(255, 6, 125, 223)),
+                        label: const Text(
+                          'Create task',
+                          style: TextStyle(
+                            fontFamily: 'Urbanist',
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: Color.fromARGB(255, 6, 125, 223),
+                          ),
+                        ),
+                        style: TextButton.styleFrom(
+                          shape: const RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(12))),
+                          backgroundColor:
+                              const Color.fromARGB(255, 227, 235, 247),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 12, horizontal: 16),
+                        ),
+                      ),
+                    ],
                   )
                 : const TaskWidget(
                     isDone: false,
-                    // onToggleCompleted: ,
                     id: 0,
                     title: 'Design sign up flow',
                     description:
                         'By the time a prospect arrives at your signup page, in most cases, they\'ve already By the time a prospect arrives at your signup page, in most cases.',
                   ),
+            const TaskWidget(
+              isDone: false,
+              id: 0,
+              title: 'Tsste',
+              description:
+                  'By the time a prospect arrives at your signup page, in most cases, they\'ve already By the time a prospect arrives at your signup page, in most cases.',
+            ),
           ],
         ),
       ),

@@ -38,7 +38,7 @@ class _TaskWidgetState extends State<TaskWidget> {
         padding: const EdgeInsets.all(10),
         margin: const EdgeInsets.symmetric(vertical: 5),
         decoration: BoxDecoration(
-          color: const Color(0xFFF5F7F9),
+          color: Color.fromARGB(255, 227, 235, 247),
           borderRadius: BorderRadius.circular(10),
         ),
         child: Column(
