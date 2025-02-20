@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:hive/hive.dart';
 import 'package:taski_todo/data/models/task.dart';
 
@@ -5,15 +7,16 @@ class TaskRepository {
   static const String _boxName = "tasksBox";
   late Box<TaskModel> _taskBox;
 
-  Future<void> init() async {
-    _taskBox = await Hive.openBox<TaskModel>(_boxName);
+  TaskRepository() {
+    _taskBox = Hive.box<TaskModel>(_boxName);
   }
-
   Future<void> addTask(TaskModel task) async {
     await _taskBox.put(task.id, task);
+    print("✅ Tarefa adicionada: ${task.toJson()}");
   }
 
   List<TaskModel> getAllTasks() {
+    print("📋 Tarefas carregadas: ${_taskBox.values.toList()}");
     return _taskBox.values.toList();
   }
 

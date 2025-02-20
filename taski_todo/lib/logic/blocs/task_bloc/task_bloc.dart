@@ -24,7 +24,8 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   ) async {
     emit(TaskLoading());
     try {
-      final tasks = taskRepository.getAllTasks();
+      final tasks = await taskRepository.getAllTasks();
+      print("🔄 Chamando GetAllTasks - Tarefas carregadas: $tasks");
       emit(TaskLoaded(tasks));
     } catch (e) {
       emit(TaskError("Erro ao carregar tarefas: $e"));
@@ -76,7 +77,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   ) async {
     emit(TaskLoading());
     try {
-      final pendingTasks = taskRepository.getPendingTasks();
+      final pendingTasks = await taskRepository.getPendingTasks();
       emit(TaskLoaded(pendingTasks));
     } catch (e) {
       emit(TaskError("Erro ao carregar tarefas pendentes: $e"));
@@ -89,7 +90,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   ) async {
     emit(TaskLoading());
     try {
-      final completedTasks = taskRepository.getCompletedTasks();
+      final completedTasks = await taskRepository.getCompletedTasks();
       emit(TaskLoaded(completedTasks));
     } catch (e) {
       emit(TaskError("Erro ao carregar tarefas concluídas: $e"));

@@ -1,10 +1,21 @@
-import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
-class TaskModel {
+part 'task.g.dart';
+
+@HiveType(typeId: 0)
+class TaskModel extends HiveObject {
+  @HiveField(0)
   final int id;
+
+  @HiveField(1)
   final String title;
+
+  @HiveField(2)
   final String description;
+
+  @HiveField(3)
   final bool isCompleted;
+
   TaskModel({
     required this.id,
     required this.title,

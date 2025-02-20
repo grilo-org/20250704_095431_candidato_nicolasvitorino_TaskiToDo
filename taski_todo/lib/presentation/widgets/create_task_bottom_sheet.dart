@@ -100,7 +100,7 @@ class _CreateTaskBottomSheetState extends State<CreateTaskBottomSheet> {
               child: TextButton(
                 onPressed: () {
                   context.read<TaskBloc>().add(AddTask(TaskModel(
-                      id: DateTime.now().millisecondsSinceEpoch,
+                      id: DateTime.now().millisecondsSinceEpoch % 0xFFFFFFFF,
                       title: _titleController.text,
                       description: _descriptionController.text,
                       isCompleted: _isCompleted)));
