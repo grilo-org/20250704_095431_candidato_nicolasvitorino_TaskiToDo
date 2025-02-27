@@ -59,3 +59,12 @@ class TaskCompleted extends TaskEvent {
   @override
   List<Object> get props => [id];
 }
+
+class GetTask extends TaskEvent {
+  final String query;
+
+  GetTask(this.query);
+
+  @override
+  List<Object> get props => [query];
+}

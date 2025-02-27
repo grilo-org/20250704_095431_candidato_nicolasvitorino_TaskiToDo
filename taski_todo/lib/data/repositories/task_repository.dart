@@ -12,11 +12,9 @@ class TaskRepository {
   }
   Future<void> addTask(TaskModel task) async {
     await _taskBox.put(task.id, task);
-    print("✅ Tarefa adicionada: ${task.toJson()}");
   }
 
   List<TaskModel> getAllTasks() {
-    print("📋 Tarefas carregadas: ${_taskBox.values.toList()}");
     return _taskBox.values.toList();
   }
 
@@ -42,5 +40,12 @@ class TaskRepository {
     for (var task in doneTasks) {
       await _taskBox.delete(task.id);
     }
+  }
+
+  List<TaskModel> getTask(String query) {
+    final String title;
+    return _taskBox.values
+        .where((task) => task.title.toLowerCase().contains(query.toLowerCase()))
+        .toList();
   }
 }

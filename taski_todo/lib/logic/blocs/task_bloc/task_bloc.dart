@@ -17,6 +17,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     on<GetPendingTasks>(_getPendingTasks);
     on<GetCompletedTasks>(_getCompletedTasks);
     on<DeleteAllDoneTasks>(_deleteAllDoneTasks);
+    on<GetTask>(_getTask);
   }
   Future<void> _getAllTasks(
     GetAllTasks event,
@@ -25,7 +26,6 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     emit(TaskLoading());
     try {
       final tasks = await taskRepository.getAllTasks();
-      print("🔄 Chamando GetAllTasks - Tarefas carregadas: $tasks");
       emit(TaskLoaded(tasks));
     } catch (e) {
       emit(TaskError("Erro ao carregar tarefas: $e"));
@@ -107,6 +107,19 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
       add(GetAllTasks()); // Atualiza a lista após deletar
     } catch (e) {
       emit(TaskError("Erro ao deletar tarefas concluídas: $e"));
+    }
+  }
+
+  Future<void> _getTask(
+    GetTask event,
+    Emitter<TaskState> emit,
+  ) async {
+    emit(TaskLoading());
+    try {
+      final filteredTasks = await taskRepository.getTask(event.query);
+      emit(TaskLoaded(filteredTasks));
+    } catch (e) {
+      emit(TaskError("Erro ao carregar tarefas: $e"));
     }
   }
 }

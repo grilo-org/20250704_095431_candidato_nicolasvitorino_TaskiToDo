@@ -1,19 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:taski_todo/data/models/task.dart';
+import 'package:taski_todo/logic/blocs/task_bloc/task_bloc.dart';
 
 class TaskWidget extends StatefulWidget {
-  final int id;
-  final String title;
-  final String description;
-  final bool isDone;
-  // final ValueChanged<bool> onToggleCompleted;
+  final TaskModel task;
 
   const TaskWidget({
     super.key,
-    required this.id,
-    required this.title,
-    required this.description,
-    required this.isDone,
-    // required this.onToggleCompleted,
+    required this.task,
   });
 
   @override
@@ -34,44 +29,65 @@ class _TaskWidgetState extends State<TaskWidget> {
     return GestureDetector(
       onTap: _toggleExpanded,
       child: Container(
-        width: 338, // Definição fixa de tamanho
+        width: 338,
         padding: const EdgeInsets.all(10),
         margin: const EdgeInsets.symmetric(vertical: 5),
         decoration: BoxDecoration(
-          color: Color.fromARGB(255, 227, 235, 247),
+          color: const Color.fromARGB(255, 245, 247, 249),
           borderRadius: BorderRadius.circular(10),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                // Checkbox(
-                //     value: widget.isDone,
-                //     onChanged: (newValue) {
-                //       widget.onToggleCompleted(newValue ?? false);
-                //     }),
-                SizedBox(
+                Transform.scale(
+                  scale: 1.3,
+                  child: Checkbox(
+                    value: widget.task.isCompleted,
+                    onChanged: (bool? value) {
+                      if (value != null) {
+                        context.read<TaskBloc>().add(
+                              UpdateTask(
+                                widget.task.copyWith(isCompleted: value),
+                              ),
+                            );
+                      }
+                    },
+                    activeColor: const Color.fromARGB(255, 198, 207, 220),
+                    checkColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    side: const BorderSide(
+                      color: Color.fromARGB(255, 198, 207, 220),
+                      width: 2,
+                    ),
+                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    visualDensity: VisualDensity.compact,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
                   child: Text(
-                    widget.title,
-                    style: const TextStyle(
+                    widget.task.title,
+                    style: TextStyle(
                       fontFamily: 'Urbanist',
                       fontWeight: FontWeight.w600,
                       fontSize: 16,
-                      color: Color(0xFF3F3D56),
+                      color: widget.task.isCompleted
+                          ? Colors.grey
+                          : const Color(0xFF3F3D56),
                     ),
-                    softWrap: true, // Permite a quebra
-                    maxLines: null, // Permite múltiplas linhas
-                    overflow: TextOverflow
-                        .visible, // Garante que o texto seja visível
+                    softWrap: true,
+                    maxLines: null,
+                    overflow: TextOverflow.visible,
                   ),
                 ),
-                !_isExpanded
-                    ? SizedBox(
-                        child: Image.asset('assets/task_dots.jpg'),
-                      )
-                    : SizedBox.shrink(),
+                SizedBox(
+                  child: Image.asset('assets/task_dots.jpg'),
+                ),
               ],
             ),
             Visibility(
@@ -79,19 +95,18 @@ class _TaskWidgetState extends State<TaskWidget> {
               child: Padding(
                 padding: const EdgeInsets.only(top: 8),
                 child: SizedBox(
-                  width: 380, // Define largura para evitar estouro
+                  width: 380,
                   child: Text(
-                    widget.description,
+                    widget.task.description,
                     style: const TextStyle(
                       fontFamily: 'Urbanist',
                       fontWeight: FontWeight.w500,
                       fontSize: 14,
                       color: Color(0xFF8D9CB8),
                     ),
-                    softWrap: true, // Permite a quebra
-                    maxLines: null, // Permite múltiplas linhas
-                    overflow: TextOverflow
-                        .visible, // Garante que o texto seja visível
+                    softWrap: true,
+                    maxLines: null,
+                    overflow: TextOverflow.visible,
                   ),
                 ),
               ),

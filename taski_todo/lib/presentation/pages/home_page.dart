@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:taski_todo/logic/blocs/task_bloc/task_bloc.dart';
+import 'package:taski_todo/presentation/pages/search_page.dart';
 import 'package:taski_todo/presentation/widgets/create_task_bottom_sheet.dart';
 import 'package:taski_todo/presentation/widgets/task_widget.dart';
 
@@ -26,6 +27,12 @@ class _HomePageState extends State<HomePage> {
           borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
         ),
         builder: (context) => const CreateTaskBottomSheet(),
+      );
+    }
+    if (index == 2) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const SearchPage()),
       );
     } else {
       setState(() {
@@ -185,10 +192,7 @@ class _HomePageState extends State<HomePage> {
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 5),
                                 child: TaskWidget(
-                                  isDone: task.isCompleted,
-                                  id: task.id,
-                                  title: task.title,
-                                  description: task.description,
+                                  task: task,
                                 ),
                               );
                             },
@@ -249,8 +253,6 @@ class _HomePageState extends State<HomePage> {
                             ),
                           );
                   } else {
-                    log(state.toString());
-                    print(state);
                     return const Center(child: CircularProgressIndicator());
                   }
                 },
