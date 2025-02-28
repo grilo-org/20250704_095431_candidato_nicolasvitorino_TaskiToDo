@@ -5,10 +5,12 @@ import 'package:taski_todo/logic/blocs/task_bloc/task_bloc.dart';
 
 class TaskWidget extends StatefulWidget {
   final TaskModel task;
+  final bool isCompletedPage;
 
   const TaskWidget({
     super.key,
     required this.task,
+    this.isCompletedPage = false,
   });
 
   @override
@@ -22,6 +24,10 @@ class _TaskWidgetState extends State<TaskWidget> {
     setState(() {
       _isExpanded = !_isExpanded;
     });
+  }
+
+  void _deleteTask(BuildContext context) {
+    context.read<TaskBloc>().add(DeleteTask(widget.task.id));
   }
 
   @override
@@ -85,9 +91,16 @@ class _TaskWidgetState extends State<TaskWidget> {
                     overflow: TextOverflow.visible,
                   ),
                 ),
-                SizedBox(
-                  child: Image.asset('assets/task_dots.jpg'),
-                ),
+                widget.isCompletedPage
+                    ? SizedBox(
+                        child: IconButton(
+                          icon: Image.asset('assets/delete.jpg'),
+                          onPressed: () => _deleteTask(context),
+                        ),
+                      )
+                    : SizedBox(
+                        child: Image.asset('assets/task_dots.jpg'),
+                      ),
               ],
             ),
             Visibility(

@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:taski_todo/logic/blocs/task_bloc/task_bloc.dart';
+import 'package:taski_todo/presentation/pages/completed_tasks_page.dart';
 import 'package:taski_todo/presentation/pages/search_page.dart';
 import 'package:taski_todo/presentation/widgets/create_task_bottom_sheet.dart';
 import 'package:taski_todo/presentation/widgets/task_widget.dart';
@@ -34,6 +35,12 @@ class _HomePageState extends State<HomePage> {
         context,
         MaterialPageRoute(builder: (context) => const SearchPage()),
       );
+    }
+    if (index == 3) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const CompletedTasksPage()),
+      );
     } else {
       setState(() {
         _selectedIndex = index;
@@ -44,6 +51,12 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    context.read<TaskBloc>().add(GetPendingTasks());
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     context.read<TaskBloc>().add(GetPendingTasks());
   }
 

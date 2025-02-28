@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:taski_todo/logic/blocs/task_bloc/task_bloc.dart';
+import 'package:taski_todo/presentation/pages/completed_tasks_page.dart';
+import 'package:taski_todo/presentation/pages/home_page.dart';
 import 'package:taski_todo/presentation/widgets/create_task_bottom_sheet.dart';
 import 'package:taski_todo/presentation/widgets/search_bar_widget.dart';
 import 'package:taski_todo/presentation/widgets/task_widget.dart';
@@ -18,7 +20,12 @@ class _SearchPageState extends State<SearchPage> {
   bool isSearching = false;
 
   void _onItemTapped(int index) {
-    if (index == 1) {
+    if (index == 0) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const HomePage()),
+      );
+    } else if (index == 1) {
       showModalBottomSheet(
         context: context,
         isScrollControlled: true,
@@ -27,8 +34,13 @@ class _SearchPageState extends State<SearchPage> {
         ),
         builder: (context) => const CreateTaskBottomSheet(),
       );
-    } else if (index != 2) {
-      Navigator.pop(context);
+    } else if (index == 2) {
+      return;
+    } else if (index == 3) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const CompletedTasksPage()),
+      );
     }
   }
 
