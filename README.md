@@ -42,3 +42,11 @@ TaskiToDo é um aplicativo de gerenciamento de tarefas desenvolvido em **Flutter
 - Este projeto foi desenvolvido com base em um **teste técnico**, utilizando um design pronto.
 - O foco principal é aprendizado e prática com **Flutter**, **Hive** e **Bloc**..
 
+## 📸 Screenshots
+
+![search-page](https://github.com/user-attachments/assets/2392bead-00e2-4ed4-8b53-328f857f8ba5)
+![homepage](https://github.com/user-attachments/assets/c4e1dac7-b822-4dd6-b61a-12ba4e211d29)
+![home-empty](https://github.com/user-attachments/assets/7f8b2e14-d8af-439f-b35c-c46f3269e501)
+![empty-completed-tasks](https://github.com/user-attachments/assets/7cbafa21-4566-4e64-8aa4-d026369172db)
+![create-task](https://github.com/user-attachments/assets/e9485803-fda6-4822-b9cb-b97cc4d7d37f)
+![completed-tasks-list](https://github.com/user-attachments/assets/931ced01-3417-4d79-b45d-748bbbbad1fa)
