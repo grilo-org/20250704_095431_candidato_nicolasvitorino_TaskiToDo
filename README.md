@@ -13,6 +13,7 @@ TaskiToDo é um aplicativo de gerenciamento de tarefas desenvolvido em **Flutter
 
 ## 🚀 Tecnologias Utilizadas
 
+- **Arquitetura MVVM** (Para organizar o projeto)
 - **Flutter** (com Dart)
 - **Hive** (para persistência de dados offline)
 - **Bloc** (para gerenciamento de estado)
