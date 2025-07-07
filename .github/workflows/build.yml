@@ -17,7 +17,7 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.13.0'  # ou outra versão usada
+          flutter-version: '3.22.1'  # versão compatível com Dart >= 3.4.4
 
       - name: Build
         working-directory: ./taski_todo
