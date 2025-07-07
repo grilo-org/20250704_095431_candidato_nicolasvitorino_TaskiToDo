@@ -13,13 +13,14 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          
+
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.13.0' # ou a versão que você está usando
+          flutter-version: '3.13.0'  # ou outra versão usada
 
       - name: Build
+        working-directory: ./taski_todo
         run: |
           flutter pub get
           flutter analyze
